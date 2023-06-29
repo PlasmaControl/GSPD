@@ -65,7 +65,7 @@ wts.ic.Data  = ones(N,1) * [ones(1,18)*1e-3 1];
 
 % weight on the 2nd derivative of the coil currents (to penalize non-smooth
 % trajectories)
-d2wts.ic.Data = ones(N,1) * [1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1] * 0.2;
+d2wts.ic.Data = ones(N,1) * [1 1 1 1 1 1 1 1 1 1 1 1 1 1 5 5 5 5 1] * 0.2;
 
 
 % no weight on absolute voltage

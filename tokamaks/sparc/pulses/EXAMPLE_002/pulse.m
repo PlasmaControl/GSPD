@@ -4,7 +4,8 @@ clear all; clc; close all
 opts = struct;
 opts.plotlevel = 0;  % 0=no plots, 1=minimal plots, 2=lotsa plots
 
-tok              = load_tok('sparc_tok');
+% tok              = load_tok('sparc_tok');
+tok              = load('./tok').tok; tok.mpp = unwrap_mpp(tok.mpp, 65, 65);
 shapes           = define_shapes(opts);
 plasma_scalars   = define_plasma_scalars(opts);
 init             = define_init;
@@ -18,7 +19,7 @@ weights          = define_optimization_weights(targs, settings, opts);
 soln = GSPD(tok, shapes, plasma_scalars, init, settings, ...
   targs, weights, opts);
 
-save('soln','soln')
+% save('soln','soln')
 
 %% Plot results
 if opts.plotlevel >= 1
@@ -34,4 +35,44 @@ if opts.plotlevel >= 1
   h = plot_structts(soln.targs, {'psibry'}, 1, h, '--r');
   legend('Actual', 'Target', 'fontsize', 14)
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

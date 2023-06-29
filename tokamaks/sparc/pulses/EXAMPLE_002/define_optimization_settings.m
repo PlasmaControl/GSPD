@@ -17,13 +17,13 @@ s.dt = mean(diff(s.t));           % time step
 
 
 % number of Grad-Shafranov iterations to perform
-s.niter = 10;  
+s.niter = 4;  
 
 
 % relaxation factor for updating the plasma current each iteration. It is 
 % generally stable with c_relax=1, but can be decreased if solution is not 
 % converging. (range 0-1)
-s.c_relax = 0.5;
+s.c_relax = 1;
 
 
 % Compress vessel elements (recommended for computational speedup if tok.nv
