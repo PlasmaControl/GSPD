@@ -45,43 +45,62 @@ spec.targets.rbdef = init.rbdef;
 spec.targets.zbdef = init.zbdef;
 spec.weights.bdef = 1;
 
-eq = gsdesign(spec, init, config);
+eq = gsdesign(spec, init, config)
 
 
 %%
 close all
+set(0, 'DefaultLineLineWidth', 1.5)
 
 figure
-plot(init.psin, eq.pprime, init.psin, init.pprime, '--')
+hold on
+plot(init.psin, eq.pprime)
+plot(init.psin, init.pprime, '--')
+legend('gsdesign', 'GSPD')
 
 figure
-plot(init.psin, eq.ffprim, init.psin, init.ffprim, '--')
+hold on
+plot(init.psin, eq.ffprim)
+plot(init.psin, init.ffprim, '--')
+legend('gsdesign', 'GSPD')
+
 
 figure
 bar([init.iv eq.iv])
+legend('gsdesign', 'GSPD')
+title('Vessel Currents')
 
 figure
-bar([init.ic eq.ic])
-
+coils = categorical(load('sparc_tok').tok.ccnames);
+bar(coils, [init.ic eq.ic])
+legend('gsdesign', 'GSPD')
+title('Coil Currents')
 
 figure
+subplot(121)
+hold on
 contourf(tok.rg, tok.zg, eq.pcurrt, 30)
 colorbar
+title('gsdesign')
+plot(tok.limdata(2,:), tok.limdata(1,:), 'color', [1 1 1] * 0.8, 'linewidth', 1)
+axis equal
 
-figure
+subplot(122)
+hold on
 contourf(tok.rg, tok.zg, init.pcurrt, 30)
 colorbar
+title('GSPD')
+plot(tok.limdata(2,:), tok.limdata(1,:), 'color', [1 1 1] * 0.8, 'linewidth', 1)
+axis equal
 
 
-
-%%
 figure
 hold on
 contour(tok.rg, tok.zg, eq.psizr, [1 1]*eq.psibry, '-b', 'linewidth', 0.5);
 contour(tok.rg, tok.zg, init.psizr, [1 1]*init.psibry,'--r', 'linewidth', 0.5);
 plot(tok.limdata(2,:), tok.limdata(1,:), 'color', [1 1 1] * 0, 'linewidth', 1)
 axis equal
-
+legend('gsdesign', 'GSPD')
 
 
 

@@ -1,10 +1,18 @@
-function p = backfit_profiles(eq, tok)
+% function fit_profiles(eq, tok)
+% 
+% clear; clc; close all
+% 
+% % load('eq_gspd')
+% load('eq')
+% load('tok')
+
+function backfit_profiles3(eq, tok)
 
 ng = 10;
 
 in = inpolygon(tok.rgg, tok.zgg, eq.rbbbs, eq.zbbbs);
 
-psin_grid = (eq.psizr - eq.psimag) / (eq.psibry - eq.psimag);
+psin_grid = (eq.psizr - eq.psibry) / (eq.psimag - eq.psibry);
 psin_grid(psin_grid<=0) = sqrt(eps);
 psin_grid(psin_grid>=1) = 1-sqrt(eps);
 psin_grid(~in) = nan;
@@ -47,14 +55,14 @@ if 1
   
   subplot(221)
   hold on
-  plot(psin, pprime, 'linewidth', 1.5)
+  plot(flip(psin), pprime, 'linewidth', 1.5)
   scatter(linspace(0,1,tok.nr), eq.pprime, 25, 'r', 'filled')
   legend('Fit', 'Eq')
   title("P'")
   
   subplot(222)
   hold on
-  plot(psin, ffprim, 'linewidth', 1.5)
+  plot(flip(psin), ffprim, 'linewidth', 1.5)
   scatter(linspace(0,1,tok.nr), eq.ffprim/mu0,  25, 'r', 'filled')
   title("FF'")
   legend('Fit', 'Eq')
@@ -83,8 +91,7 @@ if 1
   title("FF'")
 end
 
-p.pprime = interp1( psin, pprime, linspace(0,1,tok.nr));
-p.ffprim = interp1( psin, ffprim*mu0, linspace(0,1,tok.nr));
+
 
 
 

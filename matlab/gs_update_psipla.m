@@ -95,7 +95,12 @@ for i = 1:N
   alpha = interp1([0.5 1.2], [-4 -10], li, 'linear', 'extrap');
   H(3,:) = [0 1 alpha];
   
+  
+  % H(3,:) = [0 0 1]; % DEBUG, DELETE WHEN DONE
+  
+  
   c = H \ [ip; wmhd; 0];
+  
   
   jphi = [R.*b.pprimezr  1./(mu0 * R).*b.ffprimzr] * c;
   jphi = reshape(jphi, nz, nr);
@@ -107,8 +112,11 @@ for i = 1:N
   eq.psipla = mpp * pcurrt_i(:);
   eq.psipla = reshape(eq.psipla, nz, nr);
   eq.psizr = eq.psiapp + eq.psipla;
+
+
   eq.pprime = b.pprime * c(1);
-  eq.ffprim = b.ffprim1*c(2) + b.ffprim2*c(3);
+  eq.ffprim = b.ffprim * c(2:3);
+
   eq.psin = b.psin;
 
   eqs1{i} = eq;
@@ -120,7 +128,7 @@ end
 pcurrt = settings.c_relax*pcurrt + (1-settings.c_relax) * pcurrt_prev;
 
 
-
+ 
 
 
 

@@ -1,4 +1,4 @@
-function p = backfit_profiles(eq, tok)
+function backfit_profiles5(eq, tok)
 
 ng = 10;
 
@@ -83,8 +83,7 @@ if 1
   title("FF'")
 end
 
-p.pprime = interp1( psin, pprime, linspace(0,1,tok.nr));
-p.ffprim = interp1( psin, ffprim*mu0, linspace(0,1,tok.nr));
+
 
 
 
