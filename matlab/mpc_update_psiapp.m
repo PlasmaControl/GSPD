@@ -43,11 +43,7 @@ psipla = tok.mpp * pcurrt;
 % targs.psibry.Data = ones(N,1)*psibry0;
 
 
-% find the targs.psibry that is consistent with targs.ip
-if ~settings.specify_psibry_directly   
- targs.psibry = compute_psibry(init, tok, settings, shapes, ...
-  plasma_scalars, psipla);
-end
+
 
 
 % measure y

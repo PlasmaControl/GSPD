@@ -19,7 +19,7 @@ weights          = define_optimization_weights(targs, settings, opts);
 soln = GSPD(tok, shapes, plasma_scalars, init, settings, ...
   targs, weights, opts);
 
-% save('soln','soln')
+% save('soln_volt_second_mods','soln')
 
 %% Plot results
 if opts.plotlevel >= 1

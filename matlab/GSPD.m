@@ -21,12 +21,20 @@ config = mpc_config(tok, shapes, targs, settings);
 % initialize with estimate of plasma current distribution
 pcurrt = initialize_pcurrt(tok, shapes, plasma_scalars);
 
+% find the targs.psibry that is consistent with targs.ip
+if ~settings.specify_psibry_directly
+  psipla = tok.mpp * pcurrt;
+  psiapp0 = tok.mpc*init.ic + tok.mpv*init.iv;
+  psi = psipla+psiapp0;
+  
+  targs.psibry = compute_psibry(init, tok, settings, shapes, ...
+    plasma_scalars, psi);
+end
 
 % perform iterations between dynamics optimization and Grad Shafranov 
 for iter = 1:settings.niter
 
   fprintf('\nGrad-Shafranov iteration %d of %d\n', iter, settings.niter)
-
 
   % dynamics optimization
   fprintf('  computing coil trajectories...\n\n')
@@ -37,6 +45,26 @@ for iter = 1:settings.niter
   % Grad-Shafranov iteration
   [eqs, eqs0, pcurrt] = gs_update_psipla(mpcsoln, pcurrt, tok,...
     plasma_scalars, settings);
+
+
+  % find the targs.psibry that is consistent with targs.ip
+  figure(10)
+  hold on
+  plot(targs.psibry.Data)
+
+  if ~settings.specify_psibry_directly
+    for i = 1:length(eqs)
+      psizr = eqs{i}.psizr;
+      [rgg,zgg]=meshgrid(tok.rg, tok.zg);
+      in = inpolygon(rgg, zgg, eqs{i}.rbbbs, eqs{i}.zbbbs);
+      psizr(~in) = eqs{i}.psibry;
+      psi(:,i) = psizr(:);
+    end
+    targs.psibry = compute_psibry(init, tok, settings, shapes, ...
+      plasma_scalars, psi);
+  end
+
+  
 
 end
 

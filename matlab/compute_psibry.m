@@ -16,13 +16,18 @@ function psibrytarg = compute_psibry(init, tok, settings, shapes, ...
   plasma_scalars, psipla)
 
 
-% compute the initial psibry (initial condition for the integration)
-psiapp0 = tok.mpc*init.ic + tok.mpv*init.iv;
-psi0 = psiapp0(:) + psipla(:,1);
-psi0 = reshape(psi0, tok.nz, tok.nr);
+% % compute the initial psibry (initial condition for the integration)
+% psiapp0 = tok.mpc*init.ic + tok.mpv*init.iv;
+% psi0 = psiapp0(:) + psipla(:,1);
+% psi0 = reshape(psi0, tok.nz, tok.nr);
+% ref = structts2struct(shapes, {'rb','zb'}, settings.t(1));
+% psibry0 = mean(bicubicHermite(tok.rg, tok.zg, psi0, ref.rb, ref.zb));
+
 ref = structts2struct(shapes, {'rb','zb'}, settings.t(1));
+psi0 = reshape(psipla(:,1), tok.nz, tok.nr);
 psibry0 = mean(bicubicHermite(tok.rg, tok.zg, psi0, ref.rb, ref.zb));
   
+
 
 % read parameters
 N = settings.N;
