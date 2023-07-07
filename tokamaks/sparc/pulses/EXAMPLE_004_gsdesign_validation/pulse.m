@@ -2,7 +2,7 @@ clear all; clc; close all
 
 %% Initialization
 opts = struct;
-opts.plotlevel = 0;  % 0=no plots, 1=minimal plots, 2=lotsa plots
+opts.plotlevel = 2;  % 0=no plots, 1=minimal plots, 2=lotsa plots
 
 tok              = load_tok('sparc_tok');
 % tok              = load('./tok').tok; tok.mpp = unwrap_mpp(tok.mpp, 65, 65);
@@ -12,7 +12,6 @@ init             = define_init;
 settings         = define_optimization_settings(tok);
 targs            = define_optimization_targets(shapes, tok, settings, opts);
 weights          = define_optimization_weights(targs, settings, opts);
-
 
 
 %% Solve Grad-Shafanov  circuit dynamics

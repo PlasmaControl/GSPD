@@ -17,7 +17,6 @@ rlim(end:end+3) = rlim(1:4); % wrap a few values, helps later with finding local
 zlim(end:end+3) = zlim(1:4);
 
 
-
 % ==========================
 % FIND O-POINTS AND X-POINTS
 % ==========================
@@ -89,36 +88,31 @@ i = islocalmax(local_sign_maxis*psilim, 'FlatSelection', 'all');
 rtouch = rlim(i);
 ztouch = zlim(i);
 
+
 % =============================================================
 % TRACE BOUNDARIES TO FIND WHICH CANDIDATES ARE CLOSED CONTOURS
 % =============================================================
 
 % rationale: the true boundary-defining point must be an x-point interior to
 % limiter, or a local flux extrema (along the limiter). From all these
-% candidate points, the bdef-pt is the one that forms the largest closed contour
+% candidate points, the bdef-pt is the one that forms the smallest closed contour
 rcandidates = [rx(:); rtouch(:)];
 zcandidates = [zx(:); ztouch(:)];
 
 robust = 1;
-[rbdef, zbdef] = trace_contour(rg,zg,psizr,rcandidates,zcandidates,rmaxis,zmaxis,rlim,zlim,0,robust);
+[rbdef, zbdef, rbbbs, zbbbs, area] = trace_contour(rg,zg,psizr,rcandidates,zcandidates,rmaxis,zmaxis,rlim,zlim,0,robust);
 
 
-% All of the remaing (rbdef, zbdef) now form valid closed contours. 
-% Choose the most external contour
-psibdef = bicubicHermite(rg,zg,psizr,rbdef,zbdef);
-[~,i] = min(local_sign_maxis*psibdef);
+% only closed contours are returned, choose the smallest closed contour as
+% the boundary
+[~,i] = min(area);
+area = area(i);
 rbdef = rbdef(i);
 zbdef = zbdef(i);
-psibry = psibdef(i);
-
-[~,~,~,rbbbs,zbbbs] = trace_contour(rg,zg,psizr,rbdef,zbdef,rmaxis,zmaxis,rlim,zlim,0,robust);
-[rbbbs, zbbbs] = interparc(rbbbs{1}, zbbbs{1}, 200, 0);
-rbbbs = rbbbs(:);
-zbbbs = zbbbs(:);
-area = polyarea(rbbbs, zbbbs);
+[rbbbs, zbbbs] = interparc(rbbbs{i}, zbbbs{i}, 200, 0);
+psibry = bicubicHermite(rg,zg,psizr,rbdef,zbdef);
 
 [~,dist] = distance2curve([rlim zlim], [rbdef zbdef]);
-
 islimited = dist < 0.005;
 
 

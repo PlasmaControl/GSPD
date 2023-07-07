@@ -47,10 +47,10 @@ for iter = 1:settings.niter
     plasma_scalars, settings);
 
 
-  % find the targs.psibry that is consistent with targs.ip
-  figure(10)
-  hold on
-  plot(targs.psibry.Data)
+%   % find the targs.psibry that is consistent with targs.ip
+%   figure(10)
+%   hold on
+%   plot(targs.psibry.Data)
 
   if ~settings.specify_psibry_directly
     for i = 1:length(eqs)

@@ -4,7 +4,7 @@
 % meaning it is a candidate for a boundary-defining point (i.e. the primary
 % x-point or the limiting point). 
 
-function [rstart_good, zstart_good, isgood, rcontour, zcontour] = trace_contour(...
+function [rstart_good, zstart_good, rcontour, zcontour,area] = trace_contour(...
   rg,zg,psizr,rstart,zstart,rmaxis,zmaxis,rlim,zlim,plotit,robust)
 
 
@@ -21,37 +21,34 @@ for ipt = 1:length(rstart)
   z0 = zstart(ipt);
 
   % move initial condition slightly toward magnetic axis, improves robustness  
-  step = 0.002; % [m]
+  step = 0.005; % [m]
   vec = [rmaxis-r0; zmaxis-z0];
   vec = vec/norm(vec);
   r0 = r0 + step*vec(1);
   z0 = z0 + step*vec(2);
     
   if robust
-    ds = 0.002;
+    ds = 0.002;  % [m] small step size 
   else
-    ds = 0.01;
+    ds = 0.01;   % [m] larger step size
   end
   
   % initialize
   theta = 0;
   limiter_length = sum(sqrt(diff(rlim).^2 + diff(zlim).^2));
   N = ceil(limiter_length/ds);
-  r = r0;
-  z = z0;
+  r = nan(N,1);
+  z = nan(N,1);
+  r(1) = r0;
+  z(1) = z0;
   psi0 = bicubicHermite(rg,zg,psizr,r0,z0);
 
-  
+  % s = nan(N,1);
+
   for i = 1:N
-    
-%     if i > 835
-%       plot(r,z,'r','linewidth',2)
-%     end
-%     
-%     [~, psi_r, psi_z] = bicubicHermite(rg,zg,psizr,r(i),z(i))
-    
+        
     % gradient descent to make sure we're staying on the psi=constant contour
-    for j = 1:3
+    for j = 1:1
       [psi, psi_r, psi_z] = bicubicHermite(rg,zg,psizr,r(i),z(i));
       eps = 1;
       Jinv = pinv([psi_r psi_z]) * eps;            
@@ -60,19 +57,27 @@ for ipt = 1:length(rstart)
     end
     
     % take a step along the psi=constant contour
-    step = ds / sqrt(psi_r^2 + psi_z^2);
+    pow = 0.02;    % use 0.5 for constant step sizes, less than 0.5 for adaptive steps
+    step = ds / (psi_r^2 + psi_z^2)^pow;
     r(i+1) = r(i) + psi_z * step;
     z(i+1) = z(i) - psi_r * step;    
+
+    % scatter(r(i), z(i), 'r', 'filled')
+    % drawnow
+    % s(i) = sqrt((psi_z*step)^2 + (psi_r*step)^2);
           
     % measure change in angle of rotation, after 2pi rotation terminate
     u = [r(i+1) 0 z(i+1)] - [rmaxis 0 zmaxis];
     v = [r(i) 0 z(i)] - [rmaxis 0 zmaxis];
     theta = theta + atan2(norm(cross(u,v)),dot(u,v));
     if abs(theta) > 2*pi 
+      r = r(1:i+1);
+      z = z(1:i+1);
       ngood = ngood+1;
       isgood(ipt) = true;
       rcontour{ngood} = r;
       zcontour{ngood} = z;
+      area(ngood) = polyarea(r,z);
       break; 
     end
 

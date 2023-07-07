@@ -30,7 +30,7 @@ function c = build_cmat(dpsizrdx, ref, tok)
     dpsizrdxi = reshape(dpsizrdx(:,i), tok.nz, tok.nr); 
     
     c.psicp(:,i) = bicubicHermite(tok.rg, tok.zg, dpsizrdxi, ref.rb, ref.zb);
-    [c.psix(i), c.psix_r(i), c.psix_z(i)] = bicubicHermite(tok.rg, tok.zg, dpsizrdxi, ref.rx, ref.zx);
+    [c.psix(:,i), c.psix_r(:,i), c.psix_z(:,i)] = bicubicHermite(tok.rg, tok.zg, dpsizrdxi, ref.rx, ref.zx);
     c.psitouch(i) = bicubicHermite(tok.rg, tok.zg, dpsizrdxi, ref.rtouch, ref.ztouch);
     c.psibry(i) = bicubicHermite(tok.rg, tok.zg, dpsizrdxi, ref.rbdef, ref.zbdef);   
 
@@ -38,7 +38,7 @@ function c = build_cmat(dpsizrdx, ref, tok)
   
   % control points vs target touch/x-points
   ONE = ones(length(ref.rb), 1);
-  c.diff_psicp_psix = c.psicp - ONE * c.psix;
+  c.diff_psicp_psix = c.psicp - ONE * c.psix(1,:);
   c.diff_psicp_psitouch = c.psicp - ONE * c.psitouch;
   c.diff_psicp_psibry = c.psicp - ONE * c.psibry;
 

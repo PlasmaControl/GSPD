@@ -36,8 +36,7 @@ dwts.v.Data = zeros(N,nu);
 %% Populate the weights:
 
 % weight on psibry (for surface voltage and driving Ip)
-wts.psibry.Data(:) = 5e6;  
-
+wts.psibry.Data(:) = 5e7;  
 
 % wt on flux err vs touch-point starts on and turns off as plasma diverts
 wts.diff_psicp_psitouch.Data = sigmoidn(t, 2.5, 3, 1, 0) * ones(1,ncp) * 5e6;
@@ -65,7 +64,7 @@ wts.ic.Data  = ones(N,1) * [ones(1,18)*1e-3 1];
 
 % weight on the 2nd derivative of the coil currents (to penalize non-smooth
 % trajectories)
-d2wts.ic.Data = ones(N,1) * [1 1 1 1 1 1 1 1 1 1 1 1 1 1 5 5 5 5 1] * 0.2;
+d2wts.ic.Data = ones(N,1) * [0.1 0.1 1 1 1 1 1 1 1 1 1 1 1 1 5 5 5 5 1] * 0.2;
 
 
 % no weight on absolute voltage
@@ -73,7 +72,7 @@ wts.v.Data = zeros(N,nu);
 
 % weight on the change in voltage - as is, the weights are roughly
 % proportional to 1/coil inductance
-dwts.v.Data = ones(N,1) * [1 1 3 3 3 3 4 4 1 1 1 1 0.5 0.5 20 20 20 20 100] * 0.1;
+dwts.v.Data = ones(N,1) * [0.1 0.1 3 3 3 3 4 4 1 1 1 1 0.5 0.5 20 20 20 20 100] * 0.1;
 
 
 weights = variables2struct(wts, dwts, d2wts);
