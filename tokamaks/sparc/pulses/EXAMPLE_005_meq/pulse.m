@@ -1,5 +1,18 @@
 clear all; clc; close all
 
+% done:
+% - adaptive stepping
+% - 1500 series
+% 
+% todo:
+% - penalties on 2nd derivative of voltage
+% - strike sweep
+% - error handling, trace contour
+% - XPT scenario
+% - start/stop capability
+% - refine initial condition
+
+
 %% Initialization
 opts = struct;
 opts.plotlevel = 1;  % 0=no plots, 1=minimal plots, 2=lotsa plots

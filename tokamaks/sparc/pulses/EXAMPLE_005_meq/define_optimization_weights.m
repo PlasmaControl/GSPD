@@ -39,17 +39,17 @@ dwts.v.Data = zeros(N,nu);
 wts.psibry.Data(:) = 5e7;  
 
 % wt on flux err vs touch-point starts on and turns off as plasma diverts
-wts.diff_psicp_psitouch.Data = sigmoidn(t, 7, 8, 1, 0) * ones(1,ncp) * 5e6;
+wts.diff_psicp_psitouch.Data = (sigmoidn(t,7,8,1,0) + sigmoidn(t,22,23,0,1)) * ones(1,ncp) * 5e6;
 
 
 % wt on flux err vs x-point starts off and turns on as plasma diverts
-wts.diff_psicp_psix1.Data  = sigmoidn(t, 7, 8, 0, 1) * ones(1,ncp) * 5e6;
-wts.diff_psicp_psix2.Data  = sigmoidn(t, 7, 8, 0, 1) * ones(1,ncp) * 5e6;
+wts.diff_psicp_psix1.Data  = (sigmoidn(t,7,8,0,1) - sigmoidn(t,22,23,0,1)) * ones(1,ncp) * 5e6;
+wts.diff_psicp_psix2.Data  = (sigmoidn(t,7,8,0,1) - sigmoidn(t,22,23,0,1)) * ones(1,ncp) * 5e6;
 
 
 % weight on flux gradient turns on as plasma diverts
-wts.psix_r.Data = sigmoidn(t, 7, 7, 0, 1) * 1e8 * [1 1];
-wts.psix_z.Data = sigmoidn(t, 7, 8, 0, 1) * 1e8 * [1 1];
+wts.psix_r.Data = (sigmoidn(t,7,8,0,1) - sigmoidn(t,22,23,0,1)) * 1e8 * [1 1];
+wts.psix_z.Data = (sigmoidn(t,7,8,0,1) - sigmoidn(t,22,23,0,1)) * 1e8 * [1 1];
 
 
 % weight on specific points even higher

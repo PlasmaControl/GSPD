@@ -10,8 +10,8 @@ function settings = define_optimization_settings(tok)
 
 % time base for optimization
 s.t0 = 0.2;                       % start time
-s.tf = 12;                        % end time
-s.N = 60;                         % number of timepoints (equilibria), more than 100 takes a while
+s.tf = 30;                        % end time
+s.N = 120;                        % number of timepoints (equilibria), more than 100 takes a while
 s.t = linspace(s.t0, s.tf, s.N)'; % timebase
 s.dt = mean(diff(s.t));           % time step
 
