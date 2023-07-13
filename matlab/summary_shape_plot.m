@@ -66,7 +66,7 @@ function plot_shape(t, shapes, tok)
   hold on
   title(['Time = ' num2str(t)], 'fontsize', 16)
   plot(tok.limdata(2,:), tok.limdata(1,:), 'k', 'linewidth', 1.5)
-  plot(rb, zb, 'b')
+  % plot(rb, zb, 'b')
   scatter(rb, zb, 20, 'r', 'filled')
   plot(rx, zx, 'xb', 'linewidth', 4, 'markersize', 14)
   

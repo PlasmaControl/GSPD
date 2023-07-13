@@ -1,0 +1,23 @@
+   -1.36802506e+01   psiaxis, psi0/2pi =    -2.17727951e+00
+    1.87541206e+00   r-magaxe
+   -3.34557080e-06   z-magaxe
+    4.99911217e-07   Z0 (zaver)
+    1.84950000e+00   R0 [m]
+    1.22000000e+01   B0 [T]
+    1.00000000e+00   SIGN OF B0 IN EXPERIMENT
+    4.84523617e-01   TOTAL CURRENT -> I-p [A]:      8.70000000e+06
+    1.00000000e+00   SIGN OF IP IN EXPERIMENT
+    1.85963491e+00   kappa
+   -9.99109392e-01   q_0        zrhopol(1)      0.00000000e+00
+   -7.22400173e+01   q_edge
+    2.50000000e-01   beta_pol
+    8.64747607e-03   beta_tor
+    7.58498699e-01   li
+    2.00000000e+00   number of X points
+    8.10798171e-01  R of Xpt nb: 1  -> in [m]:     1.49957122e+00
+   -6.22509240e-01  Z of Xpt nb: 1  -> in [m]:    -1.15133084e+00
+    8.10770745e-01  R of Xpt nb: 2  -> in [m]:     1.49952049e+00
+    6.22465808e-01  Z of Xpt nb: 2  -> in [m]:     1.15125051e+00
+    1.80000000e+01   time
+   1518   shot number
+  11   COCOS

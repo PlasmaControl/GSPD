@@ -15,6 +15,7 @@ if ~settings.compress_vessel_elements
 end
 
 % dynamics model and any mpc stuff that can be precomputed 
+fprintf('Initializing config ...\n')
 config = mpc_config(tok, shapes, targs, settings);  
 
 
@@ -47,6 +48,8 @@ for iter = 1:settings.niter
     plasma_scalars, settings);
 
 
+  % summary_soln_plot(settings.t, shapes, eqs0, tok); 
+  
 %   % find the targs.psibry that is consistent with targs.ip
 %   figure(10)
 %   hold on
@@ -78,7 +81,7 @@ end
 
 
 % save outputs
-soln = variables2struct(eqs, mpcsoln, config, shapes, targs, ...
+soln = variables2struct(eqs, eqs0, mpcsoln, config, shapes, targs, ...
   plasma_scalars, weights, settings);
 
 

@@ -38,6 +38,9 @@ for i = 1:N
   eqs0{i} = find_bry(psizr_i, tok, 0);
 end
 
+figure
+plot_eq(eqs0{i}, tok, 'r')
+drawnow
 
 eqs1 = cell(N,1);
 pcurrt = zeros(nz*nr,N);
