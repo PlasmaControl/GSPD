@@ -47,20 +47,21 @@ for iter = 1:settings.niter
   [eqs, eqs0, pcurrt] = gs_update_psipla(mpcsoln, pcurrt, tok,...
     plasma_scalars, settings);
 
-
-  % summary_soln_plot(settings.t, shapes, eqs0, tok); 
-  
-%   % find the targs.psibry that is consistent with targs.ip
-%   figure(10)
-%   hold on
-%   plot(targs.psibry.Data)
+  % summary_soln_plot(settings.t, shapes, eqs0, tok);   
+  %   % find the targs.psibry that is consistent with targs.ip
+  %   figure(10)
+  %   hold on
+  %   plot(targs.psibry.Data)
 
   if ~settings.specify_psibry_directly
     for i = 1:length(eqs)
-      psizr = eqs{i}.psizr;
-      [rgg,zgg]=meshgrid(tok.rg, tok.zg);
-      in = inpolygon(rgg, zgg, eqs{i}.rbbbs, eqs{i}.zbbbs);
-      psizr(~in) = eqs{i}.psibry;
+      % psizr = eqs{i}.psizr;      
+      % [rgg,zgg]=meshgrid(tok.rg, tok.zg);
+      % in = inpolygon(rgg, zgg, eqs{i}.rbbbs, eqs{i}.zbbbs);
+      % psizr(~in) = eqs{i}.psibry;
+
+      psizr = eqs{i}.psipla;
+
       psi(:,i) = psizr(:);
     end
     targs.psibry = compute_psibry(init, tok, settings, shapes, ...
