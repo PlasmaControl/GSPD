@@ -1,0 +1,22 @@
+*.DS_Store
+*.asv
+**/old/*
+*.mat
+todo.txt
+*~
+*.png
+*.eps
+**/dev/*
+**/backup/*
+
+
+# exceptions (specific mat files to track)
+!*/nstxu/eq/eqLIM.mat
+!*/nstxu/eq/eqLSN.mat
+!*/nstxu/eq/eqUSN.mat
+!*/nstxu/eq/eq204660_030.mat
+!*/nstxu/tok/nstxu_tok.mat
+
+
+
+
