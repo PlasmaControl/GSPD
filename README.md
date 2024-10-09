@@ -1,3 +1,5 @@
+## Update 10/2024: This repository is no longer being maintained. An actively-maintained, updated version of the GSPulse algorithm is now available open-source [here](https://github.com/jwai-cfs/GSPulse_public). 
+
 
 ## The very quickstart guide
 
